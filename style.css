@@ -6,12 +6,47 @@ body {
     font-family: 'Tiro Bangla', 'SolaimanLipi', Arial, sans-serif; /* বাংলা ফন্ট ব্যবহার */
     background: #e9f0f7; /* হালকা নীলচে ব্যাকগ্রাউন্ড */
     margin: 0; 
-    padding: 20px;
+    padding: 0;
     color: #333;
 }
+
+/* --- নেভিগেশন মেনুর জন্য নতুন CSS --- */
+.main-nav {
+    background-color: #0b509d; /* গাঢ় নীল ব্যাকগ্রাউন্ড */
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.main-nav li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 10px 15px;
+    display: block;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.main-nav li a:hover,
+.main-nav li a.active {
+    background-color: #1a73e8; 
+}
+
+
 h1 {
     text-align: center;
     margin-bottom: 30px;
+    margin-top: 30px;
     color: #0b509d; /* গাঢ় নীল */
     font-weight: 700;
     border-bottom: 3px solid #0b509d;
@@ -86,6 +121,8 @@ h1 {
     color: #333;
     border-radius: 0 8px 8px 0;
 }
+
+
 
 /* রেসপনসিভনেস */
 @media (max-width: 600px) {

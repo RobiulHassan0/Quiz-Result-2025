@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ব্যক্তিগত ফলাফল</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">হোম পেজ</a></li>
+            <li><a href="personal_result.html" class="active">ব্যক্তিগত ফলাফল</a></li>
+            <li><a href="overall_result.html">কুইজের রেজাল্ট</a></li>
+        </ul>
+    </nav>
+    
+    <h1>ব্যক্তিগত কুইজ ফলাফল 👤</h1>
+
+    <div class="quiz-container">
+        <div class="search-box">
+            <input type="text" id="participantId" placeholder="আপনার ইমেইল/ফোন নম্বর/আইডি দিন">
+            <button onclick="fetchPersonalResult()">ফলাফল দেখুন</button>
+        </div>
+        
+        <div id="personal-data-container" class="question-card">
+            <p>উপরে আপনার আইডি দিয়ে ফলাফল দেখুন।</p>
+        </div>
+    </div>
+
+
+<script src="personal_result.js"></script> 
+</body>
+</html>
