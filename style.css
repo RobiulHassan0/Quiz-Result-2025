@@ -1,0 +1,119 @@
+
+/* Google Fonts থেকে বাংলা ফন্ট লোড করা হলো */
+@import url('https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&display=swap');
+
+body {
+    font-family: 'Tiro Bangla', 'SolaimanLipi', Arial, sans-serif; /* বাংলা ফন্ট ব্যবহার */
+    background: #e9f0f7; /* হালকা নীলচে ব্যাকগ্রাউন্ড */
+    margin: 0; 
+    padding: 20px;
+    color: #333;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #0b509d; /* গাঢ় নীল */
+    font-weight: 700;
+    border-bottom: 3px solid #0b509d;
+    padding-bottom: 10px;
+}
+.quiz-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.question-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    padding: 25px 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* উন্নত শ্যাডো */
+    border: 1px solid #dcdcdc;
+}
+.question-number {
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: #1a73e8; /* নীল */
+    padding-right: 10px;
+}
+.question-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+.options-list {
+    list-style: none;
+    padding-left: 0;
+}
+.option-item {
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 2px solid #c8d3e6; /* হালকা নীলচে বর্ডার */
+    color: #444;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.option-item:hover {
+    background-color: #f0f7ff; /* হোভারে হালকা নীল */
+    border-color: #1a73e8;
+}
+
+/* সঠিক উত্তরকে হাইলাইট করবে */
+.option-item.correct {
+    background-color: #e0f2f1; /* হালকা সবুজ */
+    border-color: #00897b; /* টিল রঙের বর্ডার */
+    color: #004d40;
+    font-weight: 600;
+    position: relative;
+}
+.option-item.correct::before {
+    content: "✅"; /* সঠিক চিহ্নের ইমোজি */
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+.explanation {
+    background: #f0f7ff; /* হালকা নীল ব্যাকগ্রাউন্ড */
+    border-left: 6px solid #1a73e8; /* গাঢ় নীল বর্ডার */
+    padding: 18px 25px;
+    margin-top: 20px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+    border-radius: 0 8px 8px 0;
+}
+
+/* রেসপনসিভনেস */
+@media (max-width: 600px) {
+    body {
+        padding: 15px 10px;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    .question-card {
+        padding: 15px 15px;
+    }
+    .question-number {
+        font-size: 1.2rem;
+    }
+    .question-text {
+        font-size: 1.1rem;
+    }
+    .option-item {
+        font-size: 0.95rem;
+        padding: 12px 15px;
+    }
+    .option-item.correct::before {
+        right: 10px;
+        font-size: 1rem;
+    }
+    .explanation {
+        padding: 15px 18px;
+        font-size: 0.9rem;
+    }
+}
