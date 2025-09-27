@@ -121,7 +121,6 @@ h1 {
     color: #333;
     border-radius: 0 8px 8px 0;
 }
-
 /* Overall Result Container */
 #overall-data-container {
     background: white;
@@ -132,6 +131,7 @@ h1 {
     margin-bottom: 30px;
     text-align: center;
     animation: fadeIn 0.6s ease-in-out;
+    overflow-x: auto; /* Prevent horizontal scroll */
 }
 
 /* Title Highlight */
@@ -145,12 +145,18 @@ h1::after {
     border-radius: 2px;
 }
 
+/* Table Wrapper for Responsiveness */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
 /* Table Design */
 #overall-data-container table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    overflow: hidden;
+    min-width: 600px; /* Prevent breaking table structure */
     border-radius: 10px;
 }
 
@@ -203,6 +209,42 @@ h1::after {
     margin: 15px 0;
 }
 
+/* মোবাইলের জন্য আরো বেশি রেসপন্সিভ স্টাইল */
+@media (max-width: 768px) {
+    #overall-data-container {
+        padding: 8px;
+    }
+
+    #overall-data-container table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 15px;
+    }
+
+    #overall-data-container th,
+    #overall-data-container td {
+        font-size: 0.7rem; /* আরও ছোট ফন্ট সাইজ */
+        padding: 8px;
+    }
+
+    #overall-data-container th {
+        padding: 8px;
+    }
+
+    #overall-data-container td {
+        padding: 6px;
+    }
+
+    #overall-data-container .rank-1, 
+    #overall-data-container .rank-2, 
+    #overall-data-container .rank-3 {
+        font-size: 0.7rem;
+    }
+}
+
+
 /* Simple Fade-in Animation */
 @keyframes fadeIn {
     from {opacity: 0; transform: translateY(10px);}
@@ -241,3 +283,4 @@ h1::after {
         font-size: 0.9rem;
     }
 }
+
