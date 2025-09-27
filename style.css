@@ -122,6 +122,93 @@ h1 {
     border-radius: 0 8px 8px 0;
 }
 
+/* Overall Result Container */
+#overall-data-container {
+    background: white;
+    border-radius: 12px;
+    padding: 25px 30px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dcdcdc;
+    margin-bottom: 30px;
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Title Highlight */
+h1::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #1a73e8;
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+/* Table Design */
+#overall-data-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+#overall-data-container th,
+#overall-data-container td {
+    padding: 14px 16px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    font-size: 1rem;
+}
+
+#overall-data-container th {
+    background: linear-gradient(90deg, #0b509d, #1a73e8);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+#overall-data-container tr:nth-child(even) {
+    background: #f9fbff;
+}
+
+#overall-data-container tr:hover {
+    background: #e3f2fd;
+    transition: background 0.3s ease;
+}
+
+/* Rank Highlight */
+.rank-1 {
+    background: #fff9c4 !important;
+    font-weight: 700;
+    color: #f57f17;
+}
+.rank-2 {
+    background: #e1f5fe !important;
+    font-weight: 600;
+    color: #0288d1;
+}
+.rank-3 {
+    background: #f3e5f5 !important;
+    font-weight: 600;
+    color: #6a1b9a;
+}
+
+/* Loader / Message */
+#overall-data-container p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 15px 0;
+}
+
+/* Simple Fade-in Animation */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
 
 
 /* রেসপনসিভনেস */
