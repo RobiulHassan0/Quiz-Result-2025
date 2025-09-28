@@ -215,8 +215,6 @@ h1::after {
     transition: background 0.3s ease;
 }
 
-
-
 /* Loader / Message */
 #overall-data-container p {
     font-size: 1.1rem;
@@ -224,6 +222,232 @@ h1::after {
     margin: 15px 0;
 }
 
+/* Ovarll Ruslt Responsive */
+@media (max-width: 768px) {
+    #overall-data-container {
+        padding: 8px;
+    }
+
+    #overall-data-container table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 15px;
+    }
+
+    #overall-data-container th,
+    #overall-data-container td {
+        font-size: 0.7rem; /* আরও ছোট ফন্ট সাইজ */
+        padding: 8px;
+    }
+
+    #overall-data-container th {
+        padding: 8px;
+    }
+
+    #overall-data-container td {
+        padding: 6px;
+    }
+
+    #overall-data-container .rank-1, 
+    #overall-data-container .rank-2, 
+    #overall-data-container .rank-3 {
+        font-size: 0.7rem;
+    }
+}
+
+
+/* Simple Fade-in Animation */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* --- Top 3 Winner Section --- */
+#top-3-container {
+    margin-bottom: 50px; /* টেবিল থেকে আলাদা করার জন্য */
+}
+
+.top-3-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 40px;
+    margin: 40px auto;
+    max-width: 1000px;
+    flex-wrap: wrap;
+}
+
+.winner-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    flex: 1;
+    max-width: 280px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.winner-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.winner-card h2 {
+    margin: 8px 0;
+    font-size: 1.3rem;
+    color: #0b509d;
+    font-weight: 700;
+}
+
+.winner-card p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.winner-card span {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1a73e8;
+    background: #f0f7ff;
+    padding: 6px 14px;
+    border-radius: 30px;
+}
+
+.winner-card .medal {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.2rem;
+}
+
+.winner-card:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 14px 35px rgba(0,0,0,0.18);
+}
+
+.winner-card.first {
+    transform: scale(1.15);
+    background: linear-gradient(135deg, #fff7db, #ffe59a);
+    border: 3px solid #f5c400;
+    z-index: 2;
+}
+.winner-card.second {
+    background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+    border: 2px solid #b0b0b0;
+}
+.winner-card.third {
+    background: linear-gradient(135deg, #ffe8dc, #ffc5a6);
+    border: 2px solid #e67e22;
+}
+
+/* --- Table Styling --- */
+#overall-data-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 40px;
+    min-width: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#overall-data-container th,
+#overall-data-container td {
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+#overall-data-container th {
+    background: linear-gradient(90deg, #0b509d, #1a73e8);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+#overall-data-container tr {
+    background: #fff;
+}
+
+#overall-data-container tr:nth-child(even) {
+    background: #f9fbff;
+}
+
+#overall-data-container tr:hover {
+    background: #f1f8ff;
+    transition: background 0.3s ease;
+}
+
+/* Top 3 Highlight (Pastel Colors) */
+tr.rank-1 {
+    background: linear-gradient(90deg, #fff8e1, #ffecb3) !important;
+    font-weight: bold;
+}
+tr.rank-2 {
+    background: linear-gradient(90deg, #f5f5f5, #e0e0e0) !important;
+    font-weight: bold;
+}
+tr.rank-3 {
+    background: linear-gradient(90deg, #ffe0cc, #ffc299) !important;
+    font-weight: bold;
+}
+
+/* Winner highlight (সবুজ) */
+tr.winner {
+    background: linear-gradient(90deg, #e6f9ec, #c8f7d2) !important;
+    font-weight: bold;
+}
+
+/* Disqualified highlight (লাল) */
+tr.disqualified {
+    background: linear-gradient(90deg, #ffe5e5, #ffcccc) !important;
+    color: #a10000;
+    font-weight: bold;
+}
+
+/* Legend Section */
+.legend {
+    margin-top: 25px;
+    text-align: left;
+    font-size: 0.95rem;
+    color: #444;
+    display: flex;
+    gap: 30px;
+}
+.legend p {
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.legend-box {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 4px;
+}
+.winner-box {
+    background: linear-gradient(90deg, #e6f9ec, #c8f7d2);
+    border: 1px solid #2e7d32;
+}
+.disqualified-box {
+    background: linear-gradient(90deg, #ffe5e5, #ffcccc);
+    border: 1px solid #b71c1c;
+}
 
 /* Perosnal Result Page*/
 /* ==== User Answer Card ==== */
@@ -486,50 +710,6 @@ h1::after {
     
 }
 
-
-
-
-/* Ovarll Ruslt Responsive */
-@media (max-width: 768px) {
-    #overall-data-container {
-        padding: 8px;
-    }
-
-    #overall-data-container table {
-        width: 100%;
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        margin-top: 15px;
-    }
-
-    #overall-data-container th,
-    #overall-data-container td {
-        font-size: 0.7rem; /* আরও ছোট ফন্ট সাইজ */
-        padding: 8px;
-    }
-
-    #overall-data-container th {
-        padding: 8px;
-    }
-
-    #overall-data-container td {
-        padding: 6px;
-    }
-
-    #overall-data-container .rank-1, 
-    #overall-data-container .rank-2, 
-    #overall-data-container .rank-3 {
-        font-size: 0.7rem;
-    }
-}
-
-
-/* Simple Fade-in Animation */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
-}
 
 
 
