@@ -222,64 +222,25 @@ h1::after {
 }
 
 /* ব্যক্তিগত তথ্য কার্ড (info-card) */
-/* --- ব্যক্তিগত ফলাফলের জন্য নতুন সেকশন স্টাইল (সংশোধিত) --- */
+/* --- অপশন কার্ডে সঠিক উত্তরে টিক চিহ্ন দেখানোর জন্য CSS --- */
 
-.explanation-section {
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 8px;
-    font-size: 1rem; /* ফন্ট সাইজ সামান্য বড় করা হলো */
-    line-height: 1.5;
-}
-
-/* সঠিক উত্তর হলে (সবুজ) */
-.explanation-section.correct-user-section {
-    background-color: #e6ffe6; /* হালকা সবুজ ব্যাকগ্রাউন্ড */
-    border: 1px solid #4CAF50; /* সবুজ বর্ডার */
-}
-
-/* ভুল উত্তর হলে (লাল) */
-.explanation-section.incorrect-user-section {
-    background-color: #ffeff0; /* হালকা লাল ব্যাকগ্রাউন্ড */
-    border: 1px solid #F44336; /* লাল বর্ডার */
-}
-
-/* ইউজারের উত্তর হাইলাইট */
-.user-response-highlight {
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background-color: #fff;
-}
-.incorrect-user-section .user-response-highlight {
-    background-color: #ffcdd2; /* ভুল উত্তরের জন্য হালকা লাল */
-    color: #b71c1c;
-}
-.correct-user-section .user-response-highlight {
-    background-color: #c8e6c9; /* সঠিক উত্তরের জন্য হালকা সবুজ */
+.options-list .option-item.correct {
+    background-color: #e8f5e9; /* হালকা সবুজ ব্যাকগ্রাউন্ড */
+    border-color: #4CAF50; /* সবুজ বর্ডার */
     color: #1b5e20;
+    font-weight: 600;
+    position: relative; 
 }
 
-/* সঠিক উত্তর হাইলাইট (যদি ভুল হয়) */
-.correct-response-highlight {
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background-color: #c8e6c9; 
-    color: #1b5e20;
+/* এটিই অপশনের পাশে সবুজ টিক চিহ্ন যুক্ত করে */
+.options-list .option-item.correct::after {
+    content: '✅';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
 }
-
-/* একাধিক উত্তরের জন্য বিশেষ বার্তা */
-.explanation-section .special-note {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed #F44336;
-    color: #c62828; /* লাল টেক্সট */
-    font-style: italic;
-    font-weight: 500;
-}
-
-/* .explanation-title ক্লাসটি সম্পূর্ণরূপে বাদ দেওয়া হয়েছে */
 /* --- মোবাইল রেসপন্সিভনেস --- */
 @media (max-width: 600px) {
     .quiz-container {
