@@ -438,9 +438,13 @@ h1::after {
     .personal-details-grid.half-ring-grid, 
     .score-summary-area {
         grid-template-columns: 1fr; 
+        gap: 30px;
     }
     .info-card-container{
         padding-bottom: 40px;
+    }
+    .card-parent-box{
+        margin: 0;
     }
     .half-ring-card, .score-card-ring{
         height: 80px; 
@@ -451,10 +455,10 @@ h1::after {
         padding: 10px;
     } */
     .card-content h2 {
-        font-size: .8rem; 
+        font-size: .9rem; 
     }
     .card-content p {
-        font-size: 0.7rem; 
+        font-size: 0.8rem; 
     }
     .score-card-ring .card-content p {
         font-size: 1.1rem;
