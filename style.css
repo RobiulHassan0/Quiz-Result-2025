@@ -212,54 +212,67 @@ h1::after {
 
 
 /* Perosnal Result */
-/* --- ব্যক্তিগত ফলাফল পেজের স্টাইল --- */
-
-/* প্রধান কনটেইনারের স্টাইল */
-.quiz-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
+/* ==== User Answer Card ==== */
+.user-answer-card {
+    margin-top: 15px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    line-height: 1.6;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
 }
 
-/* ব্যক্তিগত তথ্য কার্ড (info-card) */
-/* --- অপশন কার্ডে সঠিক উত্তরে টিক চিহ্ন দেখানোর জন্য CSS --- */
-
-.options-list .option-item.correct {
-    background-color: #e8f5e9; /* হালকা সবুজ ব্যাকগ্রাউন্ড */
-    border-color: #4CAF50; /* সবুজ বর্ডার */
-    color: #1b5e20;
-    font-weight: 600;
-    position: relative; 
+/* সঠিক উত্তর */
+.correct-answer-card {
+    background: #e8f9f0;            /* হালকা সবুজ */
+    border-left: 6px solid #28a745; /* গাঢ় সবুজ বর্ডার */
+    color: #155724;
 }
-
-/* এটিই অপশনের পাশে সবুজ টিক চিহ্ন যুক্ত করে */
-.options-list .option-item.correct::after {
-    content: '✅';
+.correct-answer-card::before {
+    /* content: "✅"; */
+    font-size: 1.4rem;
     position: absolute;
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.2rem;
 }
-/* --- মোবাইল রেসপন্সিভনেস --- */
-@media (max-width: 600px) {
-    .quiz-container {
-        margin: 20px auto;
-        padding: 10px;
-    }
 
-    .info-card, .question-card {
-        padding: 15px;
-    }
-    
-    .personal-details-list {
-        grid-template-columns: 1fr; /* মোবাইল স্ক্রিনে এক কলাম */
-    }
-
-    .questions-container {
-        grid-template-columns: 1fr; /* মোবাইল স্ক্রিনে এক কলাম */
-    }
+/* ভুল উত্তর */
+.incorrect-answer-card {
+    background: #fff3f3;            /* হালকা লাল */
+    border-left: 6px solid #dc3545; /* গাঢ় লাল বর্ডার */
+    color: #721c24;
 }
+.incorrect-answer-card::before {
+    /* content: "❌"; */
+    font-size: 1.4rem;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* সঠিক উত্তর টেক্সটকে হাইলাইট */
+.correct-response-highlight {
+    background: #ffe97a; /* হলুদ হাইলাইট */
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* বিশেষ নোট (মাল্টি-আনসার) */
+.special-note {
+    margin-top: 10px;
+    background: #f0f7ff;
+    border-left: 4px solid #1a73e8;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #333;
+}
+
 
 
 
