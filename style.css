@@ -303,34 +303,36 @@ h1::after {
 .personal-details-grid.half-ring-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* উইডথ আরও ছোট করা হলো */
-    gap: 30px; 
+    gap: 60px; 
+    row-gap: 30px;
 }
 
 /* --- স্কোর ড্যাশবোর্ড স্টাইল (গ্রিডে আনার জন্য) --- */
 .score-summary-area {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px; 
+    gap: 60px; 
     padding-top: 20px;
     margin-top: 10px;
 }
-
+.score-card-ring{
+    /* width: 100%; */
+}
 /* --- কার্ডের সাইজ ও স্টাইল (সব কার্ডের জন্য একই) --- */
 .card {
     position: relative;
     display: flex;
     align-items: center;
     background: white;
-    height: 85px; /* উচ্চতা একই থাকবে */
+    height: 85px; 
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    /* রিং এর জন্য বামে পর্যাপ্ত জায়গা রাখা হলো */
     padding-left: 70px; 
     z-index: 1;
-    overflow: visible; /* রিং সম্পূর্ণ দেখানোর জন্য */
+    overflow: visible; 
+    /* width: 80%; */
 }
 
-/* --- রিং এবং সার্কেল পজিশনিং (কোনো পরিবর্তন নেই, যেহেতু এটি কাজ করছে) --- */
 .half-ring-wrapper {
     position: absolute;
     left: 0;
@@ -340,8 +342,8 @@ h1::after {
 }
 
 .half-ring {
-    width: 100px;
-    height: 100px;
+    width: 93px;
+    height: 93px;
     border-radius: 50%;
     background: conic-gradient(var(--ring-color) 0deg 180deg, transparent 180deg 360deg);
     display: flex;
@@ -375,7 +377,7 @@ h1::after {
 .card-content p {
     margin: 0;
     color: #343a40;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     white-space: nowrap; 
     overflow: hidden;
@@ -383,8 +385,8 @@ h1::after {
 }
 
 /* --- স্কোর ভ্যালু হাইলাইট করা --- */
-.score-card-ring .card-content p {
-    font-size: 1.8rem; 
+.score-card-ring .card-content {
+    font-size: 1.5rem; 
 }
 
 
@@ -395,7 +397,8 @@ h1::after {
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     margin-bottom: 40px;
-    overflow-x: hidden; /* অতিরিক্ত কিছু না বেরিয়ে যাওয়ার জন্য */
+    overflow-x: hidden; 
+    padding-bottom: 40px;
 }
 .main-card-title {
     color: #0b509d;
@@ -425,8 +428,9 @@ h1::after {
 }
 
 .card-parent-box{
-    /* padding: 0 0px; */
+    /* padding: 0 40px; */
     box-sizing: border-box;
+    margin-left: 40px;
 }
 
 /* --- রেসপনসিভনেস (মোবাইল ডিভাইসের জন্য) --- */
@@ -441,20 +445,22 @@ h1::after {
     .half-ring-card, .score-card-ring{
         height: 80px; 
         margin-left: 20px;
-        /* width: 100%; */
+        width: 75%;
     }
     /* .card-parent-box{
         padding: 10px;
     } */
     .card-content h2 {
-        font-size: 1rem; 
+        font-size: .8rem; 
     }
     .card-content p {
-        font-size: 0.8rem; 
+        font-size: 0.7rem; 
     }
     .score-card-ring .card-content p {
         font-size: 1.1rem;
     }
+
+    /* ring to square */
     .center-circle{
         width: 50px;
         height: 50px;
@@ -469,6 +475,11 @@ h1::after {
     .section-title{
         font-size: 0.9rem;
     }
+    .card{
+        padding-left: 50px;
+        
+    }
+    
 }
 
 
@@ -547,5 +558,6 @@ h1::after {
         padding: 15px 18px;
         font-size: 0.9rem;
     }
+    
 }
 

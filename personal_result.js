@@ -293,35 +293,36 @@ const finalHTML = `
             </div>
         </div>
 
-        <div class="score-summary-area" style="">
-            <div class="card score-card-ring" style="--ring-color: #FFC107;">
-                <div class="half-ring-wrapper">
-                    <div class="half-ring">
-                        <div class="center-circle">⭐</div>
+        <div class="card-parent-box">
+            <div class="score-summary-area" style="">
+                <div class="card score-card-ring" style="--ring-color: #FFC107;">
+                    <div class="half-ring-wrapper">
+                        <div class="half-ring">
+                            <div class="center-circle">⭐</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h2>প্রাপ্ত স্কোর</h2>
+                        <p>${participantRow[2] || "০ / ০"}</p>
                     </div>
                 </div>
-                <div class="card-content">
-                    <h2>প্রাপ্ত স্কোর</h2>
-                    <p>${participantRow[2] || "০ / ০"}</p>
-                </div>
-            </div>
-
-            <div class="card score-card-ring" style="--ring-color: #00BCD4;">
-                <div class="half-ring-wrapper">
-                    <div class="half-ring">
-                        <div class="center-circle">❓</div>
+                <div class="card score-card-ring" style="--ring-color: #00BCD4;">
+                    <div class="half-ring-wrapper">
+                        <div class="half-ring">
+                            <div class="center-circle">❓</div>
+                        </div>
                     </div>
-                </div>
-                <div class="card-content">
-                    <h2>মোট প্রশ্ন</h2>
-                    <p>${quizData.questions.length}টি</p>
+                    <div class="card-content">
+                        <h2>মোট প্রশ্ন</h2>
+                        <p>${quizData.questions.length}টি</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="section-title-container">
-        <h3 class="section-title">————— আপনার উত্তরপত্র —————</h3>
+        <h3 class="section-title">———— আপনার উত্তরপত্র ————</h3>
     </div>
     
     <div class="quiz-container">
