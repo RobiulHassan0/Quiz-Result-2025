@@ -12,9 +12,7 @@ function cleanStringStrict(str) {
   return cleaned.trim();
 }
 
-/* ---- ইউজারের সিলেকশন স্ট্রিংকে আরে-তে রূপান্তর (split safely) ----
-   স্বাভাবিকভাবে Google Forms checkbox answers শিটে "a, b" বা নতুন লাইনে আসতে পারে।
-*/
+
 // Replace old parseUserSelections with this smart version.
 // It needs the question's option list to decide whether to split raw by comma/newline or treat as whole.
 function parseUserSelections(raw, optionsList) {
@@ -105,12 +103,20 @@ document
   .addEventListener("click", fetchPersonalResult);
 
 /* ====== প্রধান ফাংশন ====== */
+/* ফোন নাম্বার normalize করার হেল্পার */
+function normalizePhone(str) {
+  if (!str) return "";
+  // শুধু সংখ্যা রাখবে
+  return String(str).replace(/\D/g, "");
+}
+
+/* ====== প্রধান ফাংশন: নাম, ইমেইল, ফোন দিয়ে সার্চ ====== */
 function fetchPersonalResult() {
   const container = document.getElementById("personal-data-container");
   const participantId = document.getElementById("participantId").value.trim();
 
   if (!participantId) {
-    container.innerHTML = `<div class="msg error">অনুগ্রহ করে আপনার আইডি (ইমেইল/ফোন নম্বর) প্রবেশ করুন।</div>`;
+    container.innerHTML = `<div class="msg error">অনুগ্রহ করে আপনার নাম, ইমেইল বা ফোন নাম্বার লিখে সার্চ করুন।</div>`;
     return;
   }
 
@@ -119,16 +125,14 @@ function fetchPersonalResult() {
     return;
   }
 
-  // API কনফিগ উইন্ডোতে সেট করা আছে কি না চেক করুন।
   if (
     typeof SHEET_ID === "undefined" ||
     typeof API_KEY === "undefined" ||
     typeof SHEET_NAME === "undefined" ||
     typeof API_RANGE === "undefined"
   ) {
-    // যদি API কনফিগ না থাকে, we stop and show guidance.
     container.innerHTML = `<div class="msg error">
-            API configuration (SHEET_ID, API_KEY, SHEET_NAME, API_RANGE) ঠিক মতো লোড হয়নি। 
+            API configuration (SHEET_ID, API_KEY, SHEET_NAME, API_RANGE) ঠিকভাবে লোড হয়নি। 
             আপনার config.js চেক করুন।
         </div>`;
     return;
@@ -136,7 +140,6 @@ function fetchPersonalResult() {
 
   container.innerHTML = `<div class="msg ok">ফলাফল খোঁজা হচ্ছে — অনুগ্রহ করে অপেক্ষা করুন...</div>`;
 
-  // Google Sheets API থেকে রো লোড
   const encodedRange = encodeURIComponent(SHEET_NAME) + "!" + API_RANGE;
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodedRange}?key=${API_KEY}`;
 
@@ -152,167 +155,187 @@ function fetchPersonalResult() {
         return;
       }
 
-      const cleanId = cleanStringStrict(participantId);
-      // আপনার শিট ফর্ম্যাট অনুযায়ী ঠিক ইনডেক্স সেট করুন। এখানে ধরে নেওয়া হলো:
-      // row[1] = ইমেইল, row[3] = ফোন/আইডি (আপনার পূর্বের personal_result.js অনুযায়ী)
+      const cleanInput = cleanStringStrict(participantId);
+      const inputPhone = normalizePhone(participantId);
+
+      // participantRow খোঁজা: নাম, ইমেইল বা ফোন দিয়ে
       const participantRow = rows.slice(1).find((row) => {
         const email = row[1] ? cleanStringStrict(row[1]) : "";
-        const phone = row[3] ? cleanStringStrict(row[3]) : "";
-        return email === cleanId || phone === cleanId;
+        const name = row[3] ? cleanStringStrict(row[3]) : "";
+        const phone = row[5] ? normalizePhone(row[5]) : "";
+
+        return (
+          cleanInput === email ||
+          cleanInput === name ||
+          inputPhone === phone
+        );
       });
 
       if (!participantRow) {
-        container.innerHTML = `<div class="msg warning">এই আইডি (<strong>${participantId}</strong>) দিয়ে কোনো ফলাফল পাওয়া যায়নি।</div>`;
+        container.innerHTML = `<div class="msg warning">এই ইনপুট (<strong>${participantId}</strong>) দিয়ে কোনো ফলাফল পাওয়া যায়নি।</div>`;
         return;
       }
 
-      // ব্যক্তিগত ইনফো বানানো
-      const infoKeys = [
-        { index: 1, label: "ইমেইল" },
-        { index: 3, label: "নাম" },
-        { index: 4, label: "শিক্ষা প্রতিষ্ঠান" },
-        { index: 5, label: "ফোন নম্বর" },
-        { index: 2, label: "প্রাপ্ত স্কোর" },
-      ];
-      let infoHTML = "";
-      infoKeys.forEach((it) => {
-        infoHTML += `<li><strong>${it.label}:</strong> ${
-          participantRow[it.index] || "নেই"
-        }</li>`;
-      });
+    // ব্যক্তিগত ইনফো (আপনার সরবরাহকৃত Half-Ring ডিজাইন অনুযায়ী)
+const infoKeys = [
+    // আইকনের জন্য কালার কোড যোগ করা হলো
+    { index: 3, label: "নাম", icon: "👤", color: "#4CAF50" }, // সবুজ
+    { index: 4, label: "শিক্ষা প্রতিষ্ঠান", icon: "🏫", color: "#9C27B0" }, // পার্পল
+    { index: 5, label: "ফোন নাম্বার", icon: "📱", color: "#FF5722" }, // কমলা
+    { index: 1, label: "ইমেইল", icon: "📧", color: "#2196F3" }, // নীল
+];
+
+let infoHTML = "";
+infoKeys.forEach((it) => {
+    // হুবহু আপনার দেওয়া HTML টেমপ্লেট ব্যবহার করা হলো
+    infoHTML += `
+        <div class="card half-ring-card" style="--ring-color: ${it.color};">
+            <div class="half-ring-wrapper">
+                <div class="half-ring">
+                    <div class="center-circle">${it.icon}</div>
+                </div>
+            </div>
+            <div class="card-content">
+                <h2>${it.label}</h2>
+                <p>${participantRow[it.index] || "প্রদান করা হয়নি"}</p>
+            </div>
+        </div>
+    `;
+});
+
 
       // প্রতিটি প্রশ্ন যাচাই
       let questionsHTML = "";
       participantRow.forEach((cellValue, colIndex) => {
-        if (colIndex < 6) return; // প্রশ্নগুলো 6 নম্বর কলাম থেকে শুরু (0-based)
+        if (colIndex < 6) return; // প্রশ্নগুলো 6 নম্বর কলাম থেকে শুরু
         const qIndex = colIndex - 6;
         const q = quizData.questions[qIndex];
         if (!q) return;
 
         const rawUserAnswer = (cellValue === undefined || cellValue === null) ? '' : String(cellValue);
 
-        // parse with options (smart)
-const userSelectionsRaw = parseUserSelections(rawUserAnswer, q.options);
-const userSelectionsClean = userSelectionsRaw.map(s => normalizeForCompare(s));
+        const userSelectionsRaw = parseUserSelections(rawUserAnswer, q.options);
+        const userSelectionsClean = userSelectionsRaw.map(s => normalizeForCompare(s));
 
-// correct answers normalized
-const correctArray = Array.isArray(q.correctAnswer) ? q.correctAnswer.slice() : [q.correctAnswer];
-const correctClean = correctArray.map(a => normalizeForCompare(a));
+        const correctArray = Array.isArray(q.correctAnswer) ? q.correctAnswer.slice() : [q.correctAnswer];
+        const correctClean = correctArray.map(a => normalizeForCompare(a));
 
-const isMultiCorrect = correctClean.length > 1;
-let isUserCorrect = false;
+        const isMultiCorrect = correctClean.length > 1;
+        let isUserCorrect = false;
 
-if (isMultiCorrect) {
-    // sets: both are arrays of normalized strings
-    isUserCorrect = setsEqual(userSelectionsClean, correctClean);
-} else {
-    if (userSelectionsClean.length === 1) {
-        isUserCorrect = (userSelectionsClean[0] === correctClean[0]);
-    } else {
-        isUserCorrect = false;
-    }
-}
+        if (isMultiCorrect) {
+          isUserCorrect = setsEqual(userSelectionsClean, correctClean);
+        } else {
+          if (userSelectionsClean.length === 1) {
+            isUserCorrect = (userSelectionsClean[0] === correctClean[0]);
+          }
+        }
 
-        // Build options list (always highlight the correct options)
+        // Options list
         let optionsListHTML = '';
         q.options.forEach(opt => {
-            const optClean = normalizeForCompare(opt);
-            const isCorrectOpt = correctClean.includes(optClean);
-            const isUserSelected = userSelectionsClean.includes(optClean);
+          const optClean = normalizeForCompare(opt);
+          const isCorrectOpt = correctClean.includes(optClean);
+          const isUserSelected = userSelectionsClean.includes(optClean);
 
-            let cls = 'option-item';
-            if (isCorrectOpt) cls += ' correct';
-            if (isUserSelected) cls += ' selected';
+          let cls = 'option-item';
+          if (isCorrectOpt) cls += ' correct';
+          if (isUserSelected) cls += ' selected';
 
-            let badge = '';
-            if (isUserSelected) {
-                if (isUserCorrect) badge = `<span class="option-badge badge-correct"> ✓</span>`;
-                else badge = `<span class="option-badge badge-wrong"> ✕</span>`;
-            } else {
-                if (isCorrectOpt) badge = `<span class="option-badge badge-correct"> ✓</span>`;
-            }
+          let badge = '';
+          if (isUserSelected) {
+            badge = isUserCorrect ? `<span class="option-badge badge-correct"> ✓</span>` : `<span class="option-badge badge-wrong"> ✕</span>`;
+          } else if (isCorrectOpt) {
+            badge = `<span class="option-badge badge-correct"> ✓</span>`;
+          }
 
-            optionsListHTML += `<li class="${cls}"><span class="option-text">${escapeHtml(opt)}</span>${badge}</li>`;
+          optionsListHTML += `<li class="${cls}"><span class="option-text">${escapeHtml(opt)}</span>${badge}</li>`;
         });
 
-        // Build user answer card with rule note when multi-answer
+        // User answer card
         let userCardHTML = "";
         if (isUserCorrect) {
-          userCardHTML = `
-                        <div class="user-answer-card correct-answer-card">
-                            <p><strong>আপনার উত্তর:</strong> ${
-                              rawUserAnswer
-                                ? escapeHtml(rawUserAnswer)
-                                : "উত্তর দেননি"
-                            } ✅</p>
-                        </div>
-                    `;
+          userCardHTML = `<div class="user-answer-card correct-answer-card">
+                            <p><strong>আপনার উত্তর:</strong> ${rawUserAnswer ? escapeHtml(rawUserAnswer) : "উত্তর দেননি"} ✅</p>
+                          </div>`;
         } else {
-          // Wrong: if multi-correct -> add special rule note
           let specialRule = "";
           if (isMultiCorrect) {
-            specialRule = `
-                            <div class="special-note">
-                                <strong>নোট:</strong> এই প্রশ্নে একাধিক সঠিক উত্তর আছে — কুইজের নিয়ম অনুযায়ী <em>সবগুলো</em> সঠিক অপশন একত্রে সিলেক্ট করতে হবে। শুধুমাত্র একটি/কিছু সিলেক্ট করলে সেটিকে ভুল ধরা হবে।
-                            </div>
-                        `;
+            specialRule = `<div class="special-note">
+                             <strong>নোট:</strong> এই প্রশ্নে একাধিক সঠিক উত্তর আছে — কুইজের নিয়ম অনুযায়ী <em>সবগুলো</em> সঠিক অপশন একত্রে সিলেক্ট করতে হবে। শুধুমাত্র একটি/কিছু সিলেক্ট করলে সেটিকে ভুল ধরা হবে।
+                           </div>`;
           }
-          // Show what user selected and the actual correct answers
-          userCardHTML = `
-                        <div class="user-answer-card incorrect-answer-card">
-                            <p><strong>আপনার উত্তর:</strong> ${
-                              rawUserAnswer
-                                ? escapeHtml(rawUserAnswer)
-                                : "<em>উত্তর দেননি</em>"
-                            } ❌</p>
-                            <p><strong>সঠিক উত্তর:</strong> <span class="correct-response-highlight">${correctArray.join(
-                              " / "
-                            )}</span></p>
+          userCardHTML = `<div class="user-answer-card incorrect-answer-card">
+                            <p><strong>আপনার উত্তর:</strong> ${rawUserAnswer ? escapeHtml(rawUserAnswer) : "<em>উত্তর দেননি</em>"} ❌</p>
+                            <p><strong>সঠিক উত্তর:</strong> <span class="correct-response-highlight">${correctArray.join(" + ")}</span></p>
                             ${specialRule}
-                        </div>
-                    `;
+                          </div>`;
         }
 
         // Final question card
-        questionsHTML += `
-                    <div class="question-card">
-                        <div class="question-number">প্রশ্ন ${
-                          q.questionNumber
-                        }</div>
-                        <div class="question-text"><strong>${escapeHtml(
-                          q.questionText
-                        )}</strong></div>
-
-                        <ul class="options-list">
-                            ${optionsListHTML}
-                        </ul>
-
-                        ${userCardHTML}
-                    </div>
-                `;
+        questionsHTML += `<div class="question-card">
+                            <div class="question-number">প্রশ্ন ${q.questionNumber}</div>
+                            <div class="question-text"><strong>${escapeHtml(q.questionText)}</strong></div>
+                            <ul class="options-list">${optionsListHTML}</ul>
+                            ${userCardHTML}
+                          </div>`;
       });
 
       // Final page HTML
-      const finalHTML = `
-                <div class="info-card">
-                    <h3>👤 আপনার ব্যক্তিগত তথ্য ও মূল সারসংক্ষেপ</h3>
-                    <ul class="personal-details-list">
-                        ${infoHTML}
-                    </ul>
-                </div>
+      // Final page HTML (আপনার সরবরাহকৃত Half-Ring ডিজাইন সহ)
+const finalHTML = `
+    <div class="info-card-container">
+        <h3 class="main-card-title">👤 আপনার ব্যক্তিগত তথ্য ও মূল সারসংক্ষেপ</h3>
+        
+        <div class="personal-details-grid half-ring-grid">
+            ${infoHTML}
+        </div>
 
-                <h3>✅ আপনার উত্তরপত্র</h3>
-                <div class="quiz-container">
-                    ${questionsHTML}
+        <div class="score-summary-area">
+            <div class="card score-card-ring" style="--ring-color: #FFC107;">
+                <div class="half-ring-wrapper">
+                    <div class="half-ring">
+                        <div class="center-circle">⭐</div>
+                    </div>
                 </div>
-            `;
+                <div class="card-content">
+                    <h2>প্রাপ্ত স্কোর</h2>
+                    <p>${participantRow[2] || "০ / ০"}</p>
+                </div>
+            </div>
+
+            <div class="card score-card-ring" style="--ring-color: #00BCD4;">
+                <div class="half-ring-wrapper">
+                    <div class="half-ring">
+                        <div class="center-circle">❓</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h2>মোট প্রশ্ন</h2>
+                    <p>${quizData.questions.length}টি</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-title-container">
+        <h3 class="section-title">————— আপনার উত্তরপত্র —————</h3>
+    </div>
+    
+    <div class="quiz-container">
+        ${questionsHTML}
+    </div>
+`;
+
       container.innerHTML = finalHTML;
     })
+
     .catch((err) => {
       console.error(err);
       container.innerHTML = `<div class="msg error">ফলাফল লোড করতে সমস্যা হয়েছে: ${err.message}</div>`;
     });
 }
+
 
 /* ছোট হেল্প: HTML-এ নিরাপদ ভাবে টেক্সট দেখানোর জন্য */
 function escapeHtml(text) {

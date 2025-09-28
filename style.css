@@ -56,6 +56,35 @@ h1 {
     max-width: 900px;
     margin: 0 auto;
 }
+
+/* ইনপুট বার */
+.search-row { 
+    display:flex; 
+    gap:8px; 
+    margin-bottom:16px; 
+}
+.search-row input[type="text"] {
+    flex:1; 
+    padding: 15px 12px; 
+    border:1px solid #cfd8e3; 
+    border-radius:8px;
+    background:#fff;
+    outline: #c8d3e6;
+}
+.search-row button {
+    padding:10px 14px; 
+    border-radius:8px; 
+    border:0; 
+    background:#1976d2; 
+    color:#fff;
+    cursor:pointer;
+}
+.search-row button:disabled { 
+    background:#9bbce6; 
+    cursor:not-allowed; 
+}
+
+
 .question-card {
     background: white;
     border-radius: 12px;
@@ -186,22 +215,7 @@ h1::after {
     transition: background 0.3s ease;
 }
 
-/* Rank Highlight */
-.rank-1 {
-    background: #fff9c4 !important;
-    font-weight: 700;
-    color: #f57f17;
-}
-.rank-2 {
-    background: #e1f5fe !important;
-    font-weight: 600;
-    color: #0288d1;
-}
-.rank-3 {
-    background: #f3e5f5 !important;
-    font-weight: 600;
-    color: #6a1b9a;
-}
+
 
 /* Loader / Message */
 #overall-data-container p {
@@ -211,11 +225,11 @@ h1::after {
 }
 
 
-/* Perosnal Result */
+/* Perosnal Result Page*/
 /* ==== User Answer Card ==== */
 .user-answer-card {
     margin-top: 15px;
-    padding: 15px 20px;
+    padding: 10px 20px;
     border-radius: 10px;
     font-size: 1rem;
     line-height: 1.6;
@@ -273,9 +287,163 @@ h1::after {
     color: #333;
 }
 
+/* --- কন্টেইনার এবং হেডিং স্টাইল --- */
+.info-card-container {
+    background-color: #f7f9fc; 
+    padding: 30px; /* কন্টেইনারের সবদিকে প্যাডিং বাড়ানো হলো */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+}
+
+.main-card-title {
+    color: #0b509d;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+/* --- ব্যক্তিগত তথ্য গ্রিড লেআউট --- */
+.personal-details-grid.half-ring-grid {
+    display: grid;
+    /* কার্ডের উইডথ কমানোর জন্য minmax কমানো হলো */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* উইডথ আরও ছোট করা হলো */
+    gap: 30px; /* কার্ডের মধ্যে গ্যাপ রাখা হলো */
+    margin-bottom: 40px;
+}
+
+/* --- স্কোর ড্যাশবোর্ড স্টাইল (গ্রিডে আনার জন্য) --- */
+.score-summary-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px; 
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+/* --- কার্ডের সাইজ ও স্টাইল (সব কার্ডের জন্য একই) --- */
+.card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    height: 85px; /* উচ্চতা একই থাকবে */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* রিং এর জন্য বামে পর্যাপ্ত জায়গা রাখা হলো */
+    padding-left: 70px; 
+    z-index: 1;
+    overflow: visible; /* রিং সম্পূর্ণ দেখানোর জন্য */
+}
+
+/* --- রিং এবং সার্কেল পজিশনিং (কোনো পরিবর্তন নেই, যেহেতু এটি কাজ করছে) --- */
+.half-ring-wrapper {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -50%); /* রিং সম্পূর্ণ দেখানোর জন্য */
+    z-index: 2;
+}
+
+.half-ring {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(var(--ring-color) 0deg 180deg, transparent 180deg 360deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-circle {
+    width: 85px;
+    height: 85px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: var(--ring-color);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+    z-index: 1;
+}
+
+.card-content h2 {
+    margin: 0 0 3px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.card-content p {
+    margin: 0;
+    color: #343a40;
+    font-size: 1.15rem;
+    font-weight: 700;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+/* --- স্কোর ভ্যালু হাইলাইট করা --- */
+.score-card-ring .card-content p {
+    font-size: 1.8rem; 
+}
 
 
+/* --- অন্যান্য প্রয়োজনীয় কন্টেইনার স্টাইল (পরিবর্তন করা হয়নি) --- */
+.info-card-container {
+    background-color: #f7f9fc; 
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+}
 
+.main-card-title {
+    color: #0b509d;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.section-title-container {
+    text-align: center;
+    margin: 40px 0 30px 0; 
+}
+
+.section-title {
+    display: inline-block;
+    background-color: #0b509d;
+    color: white;
+    padding: 12px 35px;
+    border-radius: 30px; 
+    font-size: 1.6rem; 
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px; 
+}
+
+/* --- রেসপনসিভনেস (মোবাইল ডিভাইসের জন্য) --- */
+@media (max-width: 768px) {
+    .personal-details-grid.half-ring-grid, 
+    .score-summary-area {
+        grid-template-columns: 1fr; /* ছোট স্ক্রিনে এক কলামে */
+        gap: 20px;
+    }
+    .card {
+        height: 80px; 
+    }
+}
 
 /* মোবাইলের জন্য আরো বেশি রেসপন্সিভ স্টাইল */
 @media (max-width: 768px) {
