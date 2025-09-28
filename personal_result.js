@@ -3,26 +3,13 @@ let quizData = null;
 
 /**
  * স্ট্রিংকে চূড়ান্তভাবে পরিষ্কার (Clean) করার সহায়ক ফাংশন।
- * এটি সকল প্রকার হোয়াইটস্পেস, নিয়ন্ত্রণ ক্যারেক্টার (control characters), 
- * এবং শূন্য-প্রস্থের স্থান (zero-width space) অপসারণ করে।
- * নতুন সংযোজন: str.normalize("NFC") ব্যবহার, যা বাংলার মতো ভাষার জন্য এনকোডিং সমস্যার সমাধান করে।
  */
 function cleanStringStrict(str) {
     if (typeof str !== 'string') return '';
-    
-    // 1. স্ট্রিং normalization: এনকোডিং-এর পার্থক্য দূর করে
-    let cleaned = str.normalize("NFC"); 
-
-    // 2. সকল নিয়ন্ত্রণ ক্যারেক্টার (Control characters) অপসারণ
+    let cleaned = str.normalize("NFC");
     cleaned = cleaned.replace(/[\u0000-\u001F\u007F-\u009F]/g, ''); 
-    
-    // 3. সকল প্রকার হোয়াইটস্পেস (স্পেস, ট্যাব, নতুন লাইন, ইত্যাদি) অপসারণ
     cleaned = cleaned.replace(/\s/g, ''); 
-    
-    // 4. Zero Width Space (ZWSP) ক্যারেক্টার অপসারণ 
     cleaned = cleaned.replace(/[\uFEFF\u200B]/g, '');
-    
-    // 5. Trim করে এবং লোয়ারকেস (যদি সব ক্যারেক্টার ASCII হয়)
     return cleaned.trim(); 
 }
 
@@ -64,7 +51,6 @@ function fetchPersonalResult() {
 
     personalContainer.innerHTML = '<p>ফলাফল খোঁজা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...</p>';
 
-    // URL তৈরি
     const encodedRange = encodeURIComponent(SHEET_NAME) + '!' + API_RANGE;
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodedRange}?key=${API_KEY}`;
 
@@ -82,14 +68,11 @@ function fetchPersonalResult() {
                 return;
             }
 
-            const headerRow = rows[0];
             const cleanParticipantId = cleanStringStrict(participantId);
 
-            // আইডি ম্যাচিং: কলাম A (ইমেইল - সূচক 1) অথবা কলাম B (ফোন/আইডি - সূচক 3)
-            // আপনার Google Sheet এ যদি ইমেইল কলাম সূচক 1 এবং ফোন/আইডি কলাম সূচক 3 এ থাকে।
             const participantData = rows.slice(1).find(row => {
-                const email = row[1] ? cleanStringStrict(row[1]) : ''; // C2 বা সূচক 1 (টাইমস্ট্যাম্প 0)
-                const phoneOrId = row[3] ? cleanStringStrict(row[3]) : ''; // D2 বা সূচক 3
+                const email = row[1] ? cleanStringStrict(row[1]) : '';
+                const phoneOrId = row[3] ? cleanStringStrict(row[3]) : '';
                 return email === cleanParticipantId || phoneOrId === cleanParticipantId;
             });
 
@@ -99,7 +82,7 @@ function fetchPersonalResult() {
                     { index: 3, label: "ফোন নম্বর/আইডি" },
                     { index: 4, label: "নাম" },
                     { index: 5, label: "শিক্ষা প্রতিষ্ঠান" },
-                    { index: 2, label: "প্রাপ্ত স্কোর" } // স্কোর সূচক 2
+                    { index: 2, label: "প্রাপ্ত স্কোর" }
                 ];
 
                 let personalInfoHTML = '';
@@ -109,81 +92,56 @@ function fetchPersonalResult() {
 
                 let questionsHTML = '';
                 
-                // 6 নম্বর সূচক থেকে প্রশ্ন শুরু (0-ভিত্তিক সূচক)
-                // আপনার শিটে ৬,৭,৮... ইনডেক্সে প্রশ্নগুলোর উত্তর রয়েছে।
                 participantData.forEach((cellValue, index) => {
-                    // প্রশ্নগুলো 6 নম্বর কলাম থেকে শুরু
                     if (index >= 6) { 
-                        
-                        const questionIndex = index - 6; // quizData.questions-এর জন্য 0-ভিত্তিক সূচক
+                        const questionIndex = index - 6;
                         const q = quizData.questions[questionIndex];
                         
                         if (q) {
                             const userAnswer = (cellValue || '').trim();
-                            let optionsListHTML = '';
-
-                            // কুইজ ডেটা থেকে সঠিক উত্তরগুলো আনুন
                             const correctAnswers = Array.isArray(q.correctAnswer) ? q.correctAnswer : [q.correctAnswer];
                             
-                            // ***Cleaned স্ট্রিং ম্যাচিং***
                             const cleanedUserAnswer = cleanStringStrict(userAnswer);
                             const cleanedCorrectAnswers = correctAnswers.map(ans => cleanStringStrict(ans));
                             
-                            // উত্তর সঠিক কি না চেক করা
                             const isUserAnswerCorrect = cleanedCorrectAnswers.includes(cleanedUserAnswer);
-                            
-                            // কার্ডের রং নির্ধারণের জন্য
-                            const resultClass = isUserAnswerCorrect ? 'correct-user-section' : 'incorrect-user-section';
-                            
-                            // অতিরিক্ত তথ্য এবং বার্তা তৈরি
-                            let specialMessageHTML = '';
-                            let userResultIcon = isUserAnswerCorrect ? ' ✅ (সঠিক উত্তর)' : ' ❌ (ভুল উত্তর)';
-                            
-                            if (!isUserAnswerCorrect) {
-                                // যদি উত্তর ভুল হয়: সঠিক উত্তরটি specialMessageHTML-এ যোগ হবে।
-                                if (correctAnswers.length > 1) {
-                                    specialMessageHTML = `
-                                        <p class="special-note">
-                                            আপনি একটি উত্তর দিয়েছেন। দুটি অপশনই সঠিক ছিল। 
-                                            একটি সিলেক্ট করে আরেকটিকে বাদ দিলে ধরে নেওয়া হয় বাকি সঠিক উত্তরটিকেও আপনি ভুল ভেবেছেন।
-                                        </p>
-                                    `;
-                                }
-                                // সঠিক উত্তর শুধুমাত্র ভুল হলেই দেখানো হবে
-                                specialMessageHTML += `<p><strong>সঠিক উত্তর ছিল:</strong> <span class="correct-response-highlight">${correctAnswers.join(" / ")}</span></p>`;
-                            }
-                            
-                            // অপশন লিস্ট তৈরি
+
+                            let optionsListHTML = '';
                             q.options.forEach(option => {
-                                let optionClass = '';
-                                
                                 const cleanedOption = cleanStringStrict(option);
                                 const isCorrect = cleanedCorrectAnswers.includes(cleanedOption);
-                                const isUserSelection = (cleanedUserAnswer === cleanedOption); // ব্যবহারকারী এই অপশনটি সিলেক্ট করেছে কি না
+                                const isUserSelection = (cleanedUserAnswer === cleanedOption);
 
-                                // **<< সংশোধিত লজিক: শুধুমাত্র ভুল হলে সঠিক উত্তর হাইলাইট হবে >>**
-                                if (!isUserAnswerCorrect && isCorrect) { 
-                                    optionClass += ' correct'; 
-                                }
-
-                                // ব্যবহারকারীর সিলেক্ট করা অপশনটি হাইলাইট হবে
-                                if (isUserSelection) {
-                                    optionClass += ' selected';
-                                }
-
-                                // CSS দিয়ে টিক চিহ্ন দেখানোর জন্য tickIcon খালি রাখা হলো
-                                const tickIcon = ''; 
+                                let optionClass = '';
+                                if (isCorrect) optionClass += ' correct'; // সবসময় সঠিক হাইলাইট
+                                if (isUserSelection) optionClass += ' selected';
 
                                 optionsListHTML += `
                                     <li class="option-item ${optionClass}">
-                                        ${option} ${tickIcon}
+                                        ${option}
                                     </li>
                                 `;
                             });
-                            
-                            // প্রশ্ন কার্ডের HTML তৈরি
+
+                            // ইউজারের উত্তর কার্ড UI (ব্যাখ্যার মতো)
+                            let userAnswerCard = '';
+                            if (isUserAnswerCorrect) {
+                                userAnswerCard = `
+                                    <div class="user-answer-card correct-answer-card">
+                                        <p><strong>আপনার উত্তর:</strong> ${userAnswer} ✅</p>
+                                    </div>
+                                `;
+                            } else {
+                                userAnswerCard = `
+                                    <div class="user-answer-card incorrect-answer-card">
+                                        <p><strong>আপনার উত্তর:</strong> ${userAnswer || 'উত্তর দেননি'} ❌</p>
+                                        <p><strong>সঠিক উত্তর ছিল:</strong> <span class="correct-response-highlight">${correctAnswers.join(" / ")}</span></p>
+                                    </div>
+                                `;
+                            }
+
                             questionsHTML += `
-                                <div class="question-card ${resultClass}">
+                                <div class="question-card">
                                     <div class="question-number">প্রশ্ন ${q.questionNumber}</div>
                                     <div class="question-text"><strong>${q.questionText}</strong></div>
                                     
@@ -191,25 +149,13 @@ function fetchPersonalResult() {
                                         ${optionsListHTML}
                                     </ul>
 
-                                    <div class="explanation">
-                                        <div class="user-response-section">
-                                            <p class="user-answer-text">
-                                                <strong>আপনার উত্তর:</strong> <span class="user-response-highlight">${userAnswer || 'উত্তর দেননি'}</span> 
-                                                ${userResultIcon}
-                                            </p>
-                                            ${specialMessageHTML}
-                                        </div>
-                                        <div class="explanation-details">
-                                            <p><strong>ব্যাখ্যা:</strong> ${q.explanation}</p>
-                                        </div>
-                                    </div>
+                                    ${userAnswerCard}
                                 </div>
                             `;
                         }
                     }
                 });
 
-                // চূড়ান্ত HTML তৈরি (অপরিবর্তিত)
                 let finalHTML = `
                     <div class="info-card">
                         <h3>👤 আপনার ব্যক্তিগত তথ্য ও ফলাফল</h3>
@@ -234,8 +180,3 @@ function fetchPersonalResult() {
             personalContainer.innerHTML = `<p style="color: red;">ফলাফল লোড করতে সমস্যা হয়েছে। অনুগ্রহ করে API সেটিং চেক করুন: ${error.message}</p>`;
         });
 }
-
-// লোড হওয়ার পর কিছু করার প্রয়োজন হলে এখানে যোগ করতে পারেন
-// document.addEventListener('DOMContentLoaded', () => {
-//     // 
-// });

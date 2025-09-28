@@ -212,35 +212,29 @@ h1::after {
 
 
 /* Perosnal Result */
-/* --- ব্যক্তিগত ফলাফল পেজের স্টাইল --- */
-
-/* প্রধান কনটেইনারের স্টাইল */
-.quiz-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
+.correct-answer-card {
+    background-color: #e6f9f0;
+    border-left: 6px solid #28a745;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    color: #155724;
 }
 
-/* ব্যক্তিগত তথ্য কার্ড (info-card) */
-/* --- অপশন কার্ডে সঠিক উত্তরে টিক চিহ্ন দেখানোর জন্য CSS --- */
-
-.options-list .option-item.correct {
-    background-color: #e8f5e9; /* হালকা সবুজ ব্যাকগ্রাউন্ড */
-    border-color: #4CAF50; /* সবুজ বর্ডার */
-    color: #1b5e20;
-    font-weight: 600;
-    position: relative; 
+.incorrect-answer-card {
+    background-color: #fbeaea;
+    border-left: 6px solid #dc3545;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    color: #721c24;
 }
 
-/* এটিই অপশনের পাশে সবুজ টিক চিহ্ন যুক্ত করে */
-.options-list .option-item.correct::after {
-    content: '✅';
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
+.correct-response-highlight {
+    color: #155724;
+    font-weight: bold;
 }
+
 /* --- মোবাইল রেসপন্সিভনেস --- */
 @media (max-width: 600px) {
     .quiz-container {
