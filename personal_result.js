@@ -189,7 +189,7 @@ let infoHTML = "";
 infoKeys.forEach((it) => {
     // হুবহু আপনার দেওয়া HTML টেমপ্লেট ব্যবহার করা হলো
     infoHTML += `
-        <div class="card half-ring-card" style="--ring-color: ${it.color};">
+        <div class="card half-ring-card" style="--ring-color: ${it.color}; ">
             <div class="half-ring-wrapper">
                 <div class="half-ring">
                     <div class="center-circle">${it.icon}</div>
@@ -285,13 +285,15 @@ infoKeys.forEach((it) => {
       // Final page HTML (আপনার সরবরাহকৃত Half-Ring ডিজাইন সহ)
 const finalHTML = `
     <div class="info-card-container">
-        <h3 class="main-card-title">👤 আপনার ব্যক্তিগত তথ্য ও মূল সারসংক্ষেপ</h3>
+        <h3 class="main-card-title">👤 আপনার ব্যক্তিগত তথ্য</h3>
         
-        <div class="personal-details-grid half-ring-grid">
-            ${infoHTML}
+        <div class="card-parent-box">
+            <div class="personal-details-grid half-ring-grid">
+                ${infoHTML}
+            </div>
         </div>
 
-        <div class="score-summary-area">
+        <div class="score-summary-area" style="">
             <div class="card score-card-ring" style="--ring-color: #FFC107;">
                 <div class="half-ring-wrapper">
                     <div class="half-ring">
