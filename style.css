@@ -688,10 +688,10 @@ tr.disqualified {
         padding: 10px;
     } */
     .card-content h2 {
-        font-size: .9rem; 
+        font-size: 1rem; 
     }
     .card-content p {
-        font-size: 0.8rem; 
+        font-size: 0.9rem; 
     }
     .score-card-ring .card-content p {
         font-size: 1.1rem;
