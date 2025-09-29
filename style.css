@@ -151,6 +151,45 @@ h1 {
     border-radius: 0 8px 8px 0;
 }
 
+/* রেসপনসিভনেস */
+@media (max-width: 600px) {
+    .main nav {
+        padding: 15px 10px;
+    }
+    .main-nav li a {
+        font-size: 0.9rem;
+    }
+    .quiz-container{
+        padding: 0 15px;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    .question-card {
+        padding: 15px 15px;
+    }
+    .question-number {
+        font-size: 1.2rem;
+    }
+    .question-text {
+        font-size: 1.1rem;
+    }
+    .option-item {
+        font-size: 0.95rem;
+        padding: 12px 15px;
+    }
+    .option-item.correct::before {
+        right: 10px;
+        font-size: 1rem;
+    }
+    .explanation {
+        padding: 15px 18px;
+        font-size: 0.9rem;
+    }
+    
+}
+
+
 
 /* Overall Result Container */
 
@@ -735,36 +774,4 @@ tr.disqualified {
 
 
 
-
-/* রেসপনসিভনেস */
-@media (max-width: 600px) {
-    body {
-        padding: 15px 10px;
-    }
-    h1 {
-        font-size: 1.5rem;
-    }
-    .question-card {
-        padding: 15px 15px;
-    }
-    .question-number {
-        font-size: 1.2rem;
-    }
-    .question-text {
-        font-size: 1.1rem;
-    }
-    .option-item {
-        font-size: 0.95rem;
-        padding: 12px 15px;
-    }
-    .option-item.correct::before {
-        right: 10px;
-        font-size: 1rem;
-    }
-    .explanation {
-        padding: 15px 18px;
-        font-size: 0.9rem;
-    }
-    
-}
 
