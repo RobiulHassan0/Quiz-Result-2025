@@ -172,7 +172,7 @@ function fetchPersonalResult() {
       });
 
       if (!participantRow) {
-        container.innerHTML = `<div class="msg warning">এই ইনপুট (<strong>${participantId}</strong>) দিয়ে কোনো ফলাফল পাওয়া যায়নি।</div>`;
+        container.innerHTML = `<div class="msg warning"><strong>${participantId}</strong> দিয়ে কোনো ফলাফল পাওয়া যায়নি।</div>`;
         return;
       }
 

@@ -727,7 +727,7 @@ tr.disqualified {
 
     .winner-card.first { 
         order: 1; 
-        width: 70%;
+        width: 63%;
     }
     .winner-card.second { order: 2; width: 65%;}
     .winner-card.third { order: 3; width: 60%;}
