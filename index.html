@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>সীরাতুন্নবী সা. উপলক্ষ্যে আয়োজিত কুইজের ফলাফল</title>
 <link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
@@ -21,7 +25,16 @@
 
 <div class="quiz-container" id="quiz"></div>
 
+<div id="footer-placeholder"></div>
 
-<script src="home.js"></script>
+<script src="answers.js"></script>
+<script>
+  fetch("footer.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("footer-placeholder").innerHTML = data;
+    });
+</script>
+
 </body>
 </html>

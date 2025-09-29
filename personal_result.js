@@ -262,7 +262,7 @@ infoKeys.forEach((it) => {
           let specialRule = "";
           if (isMultiCorrect) {
             specialRule = `<div class="special-note">
-                             <strong>নোট:</strong> এই প্রশ্নে একাধিক সঠিক উত্তর আছে — কুইজের নিয়ম অনুযায়ী <em>সবগুলো</em> সঠিক অপশন একত্রে সিলেক্ট করতে হবে। শুধুমাত্র একটি/কিছু সিলেক্ট করলে সেটিকে ভুল ধরা হবে।
+                             <strong>নোট:</strong> এই প্রশ্নের উত্তরের একাধিক অপশন সঠিক। কুইজের নিয়ম অনুযায়ী <em>সবগুলো সঠিক অপশন সিলেক্ট করতে হবে।</em> শুধুমাত্র একটি/কিছু সিলেক্ট করলে সেটিকে ভুল ধরা হবে।
                            </div>`;
           }
           userCardHTML = `<div class="user-answer-card incorrect-answer-card">

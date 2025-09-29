@@ -12,7 +12,7 @@ body {
 
 /* --- নেভিগেশন মেনুর জন্য নতুন CSS --- */
 .main-nav {
-    background-color: #0b509d; /* গাঢ় নীল ব্যাকগ্রাউন্ড */
+    background-color: #1e293b; /* গাঢ় নীল ব্যাকগ্রাউন্ড */
     padding: 10px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -39,7 +39,7 @@ body {
 
 .main-nav li a:hover,
 .main-nav li a.active {
-    background-color: #1a73e8; 
+    background-color: #0ea5e9; 
 }
 
 
@@ -587,9 +587,9 @@ tr.disqualified {
     padding-top: 20px;
     margin-top: 10px;
 }
-.score-card-ring{
-    /* width: 100%; */
-}
+/* .score-card-ring{
+    width: 100%;
+} */
 /* --- কার্ডের সাইজ ও স্টাইল (সব কার্ডের জন্য একই) --- */
 .card {
     position: relative;
@@ -775,71 +775,99 @@ tr.disqualified {
 
 /* === Infographics Section === */
 
-.infographic-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 30px;
-    padding: 20px;
+
+/* === Footer Section === */
+.site-footer {
+  background-color: #1e293b;
+  color: #e2e8f0;
+  padding: 10px 20px 10px;
+  margin-top: 150px;
+  font-family: 'Noto Sans Bengali', sans-serif;
 }
 
-.infographic-card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 25px 20px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    border: 1px solid #e0e0e0;
-    transition: all 0.3s ease;
-}
-.infographic-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* max-width: 1200px; */
+  margin: auto;
 }
 
-.infographic-card h3 {
-    font-size: 1.2rem;
-    color: #0b509d;
-    font-weight: 700;
-    margin-bottom: 18px;
-    border-left: 5px solid #1a73e8;
-    padding-left: 12px;
+.footer-section {
+  flex: 1 1 220px;
+  padding: 20px;
+  position: relative;
 }
 
-.infographic-card canvas {
-    width: 100% !important;
-    height: 260px !important;
+.footer-section:last-child {
+  border-right: none;
 }
 
-.stats-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 18px;
-    padding-top: 12px;
-    border-top: 1px solid #eaeaea;
-    font-size: 0.95rem;
-    font-weight: 600;
-}
-.stats-footer .correct {
-    color: #00897b;
-    background: #e0f7f1;
-    padding: 6px 12px;
-    border-radius: 8px;
-}
-.stats-footer .total {
-    color: #0b509d;
-    background: #e8f0fe;
-    padding: 6px 12px;
-    border-radius: 8px;
+.footer-section h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #ffffff;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-    .infographic-grid {
-        grid-template-columns: 1fr;
-        padding: 10px;
-        gap: 20px;
-    }
-    .infographic-card h3 {
-        font-size: 1rem;
-    }
+.footer-section p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #cbd5e1;
 }
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin-right: 15px;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+.social-icons a i {
+  margin-right: 6px;
+}
+
+.social-icons a:hover {
+  color: #0ea5e9;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  border-top: 1px solid #334155;
+  padding-top: 15px;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* Desktop view: Right vertical line between sections */
+.footer-section:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background-color: #334155; /* হালকা ধূসর লাইনের জন্য */
+}
+
+
+/* Mobile view: bottom horizontal line between sections */
+@media (max-width: 768px) {
+  .footer-section:not(:last-child)::after {
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: auto;
+  }
+}
+
+
