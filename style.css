@@ -151,7 +151,9 @@ h1 {
     border-radius: 0 8px 8px 0;
 }
 
+
 /* Overall Result Container */
+
 #overall-data-container {
     background: white;
     border-radius: 12px;
@@ -222,42 +224,6 @@ h1::after {
     margin: 15px 0;
 }
 
-/* Ovarll Ruslt Responsive */
-@media (max-width: 768px) {
-    #overall-data-container {
-        padding: 8px;
-    }
-
-    #overall-data-container table {
-        width: 100%;
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        margin-top: 15px;
-    }
-
-    #overall-data-container th,
-    #overall-data-container td {
-        font-size: 0.7rem; /* আরও ছোট ফন্ট সাইজ */
-        padding: 8px;
-    }
-
-    #overall-data-container th {
-        padding: 8px;
-    }
-
-    #overall-data-container td {
-        padding: 6px;
-    }
-
-    #overall-data-container .rank-1, 
-    #overall-data-container .rank-2, 
-    #overall-data-container .rank-3 {
-        font-size: 0.7rem;
-    }
-}
-
-
 /* Simple Fade-in Animation */
 @keyframes fadeIn {
     from {opacity: 0; transform: translateY(10px);}
@@ -266,7 +232,8 @@ h1::after {
 
 /* --- Top 3 Winner Section --- */
 #top-3-container {
-    margin-bottom: 50px; /* টেবিল থেকে আলাদা করার জন্য */
+    margin-bottom: 100px;
+    margin-top: 100px;
 }
 
 .top-3-wrapper {
@@ -343,14 +310,17 @@ h1::after {
     background: linear-gradient(135deg, #fff7db, #ffe59a);
     border: 3px solid #f5c400;
     z-index: 2;
+    order: 1;
 }
 .winner-card.second {
     background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
     border: 2px solid #b0b0b0;
+    order: 2;
 }
 .winner-card.third {
     background: linear-gradient(135deg, #ffe8dc, #ffc5a6);
     border: 2px solid #e67e22;
+    order: 3;
 }
 
 /* --- Table Styling --- */
@@ -366,7 +336,7 @@ h1::after {
 
 #overall-data-container th,
 #overall-data-container td {
-    padding: 14px 16px;
+    padding: 14px 12px;
     text-align: center;
     font-size: 1rem;
 }
@@ -448,6 +418,47 @@ tr.disqualified {
     background: linear-gradient(90deg, #ffe5e5, #ffcccc);
     border: 1px solid #b71c1c;
 }
+
+/* Ovarll Ruslt Responsive */
+@media (max-width: 768px) {
+    #overall-data-container {
+        padding: 8px;
+    }
+
+    #overall-data-container table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 15px;
+    }
+
+    #overall-data-container th,
+    #overall-data-container td {
+        font-size: 0.7rem; /* আরও ছোট ফন্ট সাইজ */
+        padding: 8px;
+    }
+
+    #overall-data-container th {
+        padding: 8px;
+    }
+
+    #overall-data-container td {
+        padding: 6px;
+    }
+
+    #overall-data-container .rank-1, 
+    #overall-data-container .rank-2, 
+    #overall-data-container .rank-3 {
+        font-size: 0.7rem;
+    }
+
+    #top-3-container{
+        margin-top: 70px;
+        margin-bottom: 70px;
+    }
+}
+
 
 /* Perosnal Result Page*/
 /* ==== User Answer Card ==== */
@@ -706,6 +717,10 @@ tr.disqualified {
     .card{
         padding-left: 50px;
         
+    }
+    #overall-data-container p{
+        font-size: 1rem;
+        margin-left: 10px;
     }
     
 }

@@ -27,16 +27,16 @@ function loadOverallResults() {
                 return;
             }
 
-            const headerRow = rows[0];
+            // --- টেবিল হেডার কাস্টম নাম ---
             let html = "<table class='results-table'>";
             html += "<thead><tr>";
             html += `<th>ক্রমিক</th>`; 
-            html += `<th>${headerRow[3]}</th>`;
-            html += `<th>${headerRow[4]}</th>`;
-            html += `<th>${headerRow[2]}</th>`;
+            html += `<th>প্রতিযোগীর নাম</th>`;
+            html += `<th>প্রতিযোগীর শিক্ষাপ্রতিষ্ঠান</th>`;
+            html += `<th>প্রাপ্ত নম্বর</th>`;
             html += "</tr></thead><tbody>";
 
-            // সব ডেটা সংগ্রহ
+            // --- ডেটা সংগ্রহ ---
             let participants = [];
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
@@ -48,14 +48,14 @@ function loadOverallResults() {
                 });
             }
 
-            // স্কোর অনুযায়ী টপ ৩ নির্বাচন
+            // --- স্কোর অনুসারে টপ ৩ নির্বাচন ---
             let top3 = [...participants].sort((a, b) => {
                 let scoreA = parseInt(a.score) || 0;
                 let scoreB = parseInt(b.score) || 0;
                 return scoreB - scoreA;
             }).slice(0, 3);
 
-            // টপ ৩ কার্ড UI
+            // --- টপ ৩ কার্ড UI ---
             top3Container.innerHTML = `
                 <div class="top-3-wrapper">
                     <div class="winner-card second">
@@ -82,19 +82,21 @@ function loadOverallResults() {
                 </div>
             `;
 
-            // বাতিল অংশগ্রহণকারীদের index
+            // --- বাতিল অংশগ্রহণকারীদের index ---
             const disqualifiedIndexes = [4, 10, 16, 18, 27, 28];
 
-            // টেবিল (row highlight)
+            // --- টেবিল ডাটা সারি ---
             participants.forEach(p => {
                 let rowClass = '';
-                
-                // বাতিল হলে লাল রঙ
+
                 if (disqualifiedIndexes.includes(p.index)) {
                     rowClass = 'disqualified';
                 }
-                // টপ ৩ হলে সবুজ রঙ
-                else if (p.name === top3[0]?.name || p.name === top3[1]?.name || p.name === top3[2]?.name) {
+                else if (
+                    p.name === top3[0]?.name || 
+                    p.name === top3[1]?.name || 
+                    p.name === top3[2]?.name
+                ) {
                     rowClass = 'winner';
                 }
 
@@ -108,11 +110,11 @@ function loadOverallResults() {
 
             html += "</tbody></table>";
 
-            // টেবিলের নিচে টীকা
+            // --- টীকা (Legend) ---
             html += `
                 <div class="legend">
-                    <p><span class="legend-box winner-box"></span> সবুজ = প্রতিযোগিতায় বিজয়ী</p>
-                    <p><span class="legend-box disqualified-box"></span> লাল = একাধিকবার ফর্ম পূরণ করার কারণে অংশগ্রহণ বাতিল</p>
+                    <p><span class="legend-box winner-box"></span> সবুজ = বিজয়ী</p>
+                    <p><span class="legend-box disqualified-box"></span> লাল = বাতিল অংশগ্রহণ</p>
                 </div>
             `;
 
