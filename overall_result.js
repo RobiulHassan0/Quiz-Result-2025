@@ -120,6 +120,8 @@ function loadOverallResults() {
 
             overallContainer.innerHTML = html;
         })
+
+        
         .catch(error => {
             console.error("Error loading overall data:", error);
             overallContainer.innerHTML = `<p style="color: red;">ফলাফল লোড করতে সমস্যা হয়েছে: ${error.message}</p>`;
