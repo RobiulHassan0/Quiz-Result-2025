@@ -3,42 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ইনফোগ্রাফি</title>
+    <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali&display=swap" rel="stylesheet">
-
 </head>
 <body>
-    <nav class="main-nav">
-        <ul>
-            <li><a href="index.html">সঠিক উত্তর</a></li>
-            <li><a href="personal_result.html">ব্যক্তিগত ফলাফল</a></li>
-            <li><a href="overall_result.html">সামগ্রিক ফলাফল</a></li>
-            <li><a href="infographics.html"  class="active">ইনফোগ্রাফি</a></li>
-        </ul>
-    </nav>
-
-    <!-- infographics.html -->
-    <div class="info-card-container">
-        <div class="section-title-container">
-            <h2 class="section-title">—— 📊 উত্তরপত্রের ইনফোগ্রাফি ——</h2>
-            <p>প্রতিটি প্রশ্নের সঠিক উত্তরের হার ও সামগ্রিক সঠিক উত্তরের হার ইনফোগ্রাফি আকারে দেখানো হবে।</p>
-            <h4>শীঘ্রই আসবে এই ফিচার ইনশাআল্লাহ!</h4>
-        </div>
-    </div>    
-
-    <div id="footer-placeholder"></div>
-
-    <script src="config.js"></script>
-    <script src="infographics.js"></script>
-    
-    <script>
-        fetch("footer.html")
-            .then(res => res.text())
-            .then(data => {
-            document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
+     <div id="infographics-container"></div> <!-- এখানে ইনফোগ্রাফিক্স আসবে -->
+     <script src="config.js"></script>
+     <script src="infographics.js"></script>
 </body>
 </html>
