@@ -80,8 +80,6 @@ document.addEventListener('DOMContentLoaded',loadInfographics);
 
 
 
-
-
 document.addEventListener("DOMContentLoaded", function(){
 
   // ==== Individual based ====

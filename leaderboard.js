@@ -147,7 +147,6 @@ const manualDisqualifiedNames = [
       overallContainer.innerHTML = html;
 
 
-
     })
     .catch(err => {
       console.error(err);
