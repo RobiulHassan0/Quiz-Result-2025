@@ -870,6 +870,12 @@ tr.disqualified {
   padding:15px;
   box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
+
+.info-right-title{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
 .compact-wheel{max-width:220px; margin:auto;}
 .metrics-list{margin-top:10px;}
 .metric-card{padding:8px; margin:6px 0; background:#f9f9f9; border-radius:6px; font-size:14px;}
@@ -877,7 +883,6 @@ tr.disqualified {
 @media(max-width:768px){
   .infographics-wrapper{flex-direction:column;}
 }
-
 
 
 
@@ -889,7 +894,6 @@ tr.disqualified {
     padding: 8px;
   }
 }
-
 
 /* === Footer Section === */
 .site-footer {

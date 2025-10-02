@@ -91,7 +91,7 @@ const manualDisqualifiedNames = [
       });
 
       // Build HTML table
-      let html = "<table class='results-table'>";
+      let html = "<table class='results-table '>";
       html += "<thead><tr><th>রোল</th><th>নাম</th><th>শিক্ষাপ্রতিষ্ঠান</th><th>স্কোর</th></tr></thead><tbody>";
 
       participants.forEach((p, i) => {
@@ -168,3 +168,4 @@ function escapeHtml(text) {
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(loadLeaderboard, 200);
 });
+
