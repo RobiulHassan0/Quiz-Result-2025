@@ -873,7 +873,7 @@ tr.disqualified {
 .compact-wheel{max-width:220px; margin:auto;}
 .metrics-list{margin-top:10px;}
 .metric-card{padding:8px; margin:6px 0; background:#f9f9f9; border-radius:6px; font-size:14px;}
-#tierLegend{margin-top:10px; font-size:14px;}
+#tierLegend{margin-top:30px; font-size:14px;}
 @media(max-width:768px){
   .infographics-wrapper{flex-direction:column;}
 }
